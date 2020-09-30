@@ -1,0 +1,267 @@
+<div class="container">
+  <div *ngIf="show">
+    <div class="container" *ngIf="show">
+      <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 lesson-card">
+          <div class="card lesson-border" style="background-color:#ff5100fd;">
+            <div class="card-body">
+
+              <h5 class="card-title"> Inforamtion </h5>
+              <p class="card-text"><b>Name: {{institute.Name}} </b></p>
+              <p class="card-text"><b>Email: {{institute.Email}} </b></p>
+              <p class="card-text"><b>Address: {{institute.Address}} </b></p>
+              <p class="card-text"><b>Country: {{institute.Country}} </b></p>
+              <p class="card-text"><b>State: {{institute.State}} </b></p>
+              <p class="card-text"><b>City: {{institute.City}} </b></p>
+              <p class="card-text"><b>Skill: {{institute.SkillName}} </b></p>
+              <p class="card-text"><b>Skill level: {{institute.Skilllevel}} </b></p>
+              <p class="card-text"><b>Skill Desc: {{institute.Description}} </b></p>
+              <p class="card-text"><b>Location: {{location}} </b></p>
+              <p class="card-text"><b>Experience: {{institute.optradio}} </b></p>
+              <p class="card-text"><b>Experience in Years: {{institute.Years}} </b></p>
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <form [formGroup]="InstituteForm">
+          <div class="row">
+            <div class="col"> <label for="comment">Name</label>
+              <br> <input type="text" placeholder="Name" class="form-control" formControlName="Name"
+                [(ngModel)]="institute.Name" name="Name" required>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf="InstituteForm.get('Name').touched&& !InstituteForm.get('Name').value"><strong> Name can't be
+                  empty</strong></div>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf=" InstituteForm.get('Name').touched&&InstituteForm.get('Name').errors"><strong>Enter Minimum 4
+                  letters & Alphabtets Only</strong></div>
+            </div><br><br>
+
+            <div class="col"> <label for="comment">Email</label>
+              <br><input type="email" class="form-control" placeholder="Email" formControlName="Email"
+                [(ngModel)]="institute.Email" required>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf="InstituteForm.get('Email').touched&& !InstituteForm.get('Email').value"><strong> Email can't be
+                  empty</strong></div>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf=" InstituteForm.get('Email').touched&&InstituteForm.get('Email').errors"><strong>Enter Valid Email
+                  pattern</strong></div>
+            </div><br><br>
+
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">
+              <div>
+                <label for="comment">Address</label>
+                <textarea class="form-control" id="comment" class="form-control" placeholder="Address"
+                  formControlName="Address" [(ngModel)]="institute.Address"></textarea>
+                <div class="alert alert-danger" style="width: fit-content;"
+                  *ngIf="InstituteForm.get('Address').touched&& !InstituteForm.get('Address').value"><strong> Address
+                    can't be empty</strong></div>
+                <div class="alert alert-danger" style="width: fit-content;"
+                  *ngIf=" InstituteForm.get('Address').touched&&InstituteForm.get('Address').errors"><strong> Valid
+                    Address Name </strong></div>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12 col-xs-12"><label for="comment">Country</label><br>
+              <select class="form-control" id="sel1" placeholder="Country" formControlName="Country"
+                class="form-control" [(ngModel)]="institute.Country" name="Country"
+                (change)="getState($event.target.value)">
+                <option *ngFor="let ptr of Country" [value]="ptr.id">{{ptr.name}}</option>
+
+              </select>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf="InstituteForm.get('Country').touched&& !InstituteForm.get('Country').value"><strong> Country
+                  can't be empty</strong></div>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf=" InstituteForm.get('Country').touched&&InstituteForm.get('Country').errors"><strong> Valid
+                  Country Name </strong></div>
+            </div><br><br>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12  col-xs-12"><label for="comment">State</label><br> <select
+                [disabled]="InstituteForm.get('State').errors" class="form-control" id="sel1" placeholder="State"
+                formControlName="State" class="form-control" [(ngModel)]="institute.State"
+                (change)="getCity($event.target.value)" name="City">
+                <option *ngFor="let ptr1 of State" [value]="ptr1.id">{{ptr1.name}}</option>
+
+              </select>
+              <div class="alert alert-danger" style="width: max-width;"
+                *ngIf="InstituteForm.get('State').touched&& !InstituteForm.get('State').value"><strong>State can't be
+                  empty</strong> </div>
+              <div class="alert alert-danger" style="width:max-width;"
+                *ngIf=" InstituteForm.get('State').touched&&InstituteForm.get('State').errors"> <strong>should be valid
+                  State</strong> </div>
+
+            </div> <br><br>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12  col-xs-12"><label for="comment">City</label> <select
+                class="form-control" id="sel1" placeholder="City" formControlName="City" class="form-control"
+                [(ngModel)]="institute.City" name="City">
+                <option *ngFor="let ptr of city" [value]="ptr.id">{{ptr.name}}</option>
+
+              </select>
+              <div class="alert alert-danger" style="width:max-width;"
+                *ngIf="InstituteForm.get('City').touched&& !InstituteForm.get('City').value"><strong> City can't be
+                  empty</strong></div>
+              <div class="alert alert-danger" style="width:max-width;"
+                *ngIf=" InstituteForm.get('City').touched&&InstituteForm.get('City').errors"><strong>Should be valid
+                  City</strong> </div>
+            </div><br><br>
+
+
+          </div>
+          <br>
+          <h4>Preffered Locations</h4>
+          <br>
+          <div class="row">
+            <div class="col">
+
+              <div *ngFor="let data of Data; let i=index">
+                <label>
+                  <input type="checkbox" [value]="data.value" (change)="onCheckboxChange($event)" />
+                  {{data.name}}
+                </label>
+              </div>
+              <div class="alert alert-danger" style="width:fit-content;"
+                *ngIf="this.InstituteForm.controls['checkArray'].errors?.required"><strong> Checkbox is required, select
+                  atleast one value.</strong></div>
+
+
+              <!-- <p class="error" *ngIf="this.InstituteForm.controls['CheckBox'].errors?.required">
+      Checkbox is required, select atleast one value.
+    </p> -->
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Are You Experienced ? </label>
+              <div class="form-check">
+                <label class="form-check-label" for="radio1">
+                  <input type="radio" class="form-check-input" id="radio1" name="optradio" value="Yes"
+                    formControlName="optradio" [(ngModel)]="institute.optradio" (click)="check()">YES
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label" for="radio2">
+                  <input type="radio" class="form-check-input" id="radio2" value="No" name="optradio" formControlName="optradio"
+                    (click)="unCheck()" [(ngModel)]="institute.optradio"> NO
+                </label>
+              </div>
+
+
+
+              <!-- Showing error method -->
+
+              <div class="alert alert-danger" style="width:fit-content;"
+                *ngIf="this.InstituteForm.controls['optradio'].errors?.required"><strong>Please Select the either
+                  value</strong></div>
+            </div>
+
+            <div class="col" *ngIf="show1"> <label for="comment">Total Year</label>
+              <br> <input type="number" placeholder="Years" class="form-control" formControlName="Years"
+                [(ngModel)]="institute.Years" Years="Years" required>
+              <div class="alert alert-danger" style="width: fit-content;"
+                *ngIf="InstituteForm.get('Years').touched&& !InstituteForm.get('Years').value"><strong> Years can't be
+                  empty</strong></div>
+
+            </div>
+          </div>
+          <div class="card  bg-info text-white">
+            <div class="card-header" style="color:blue; font-size: 30px;">
+              Skills
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col"> <label for="comment">Skill Name</label>
+                  <br> <input list="skills" type="text" placeholder="SkillName" class="form-control"
+                    formControlName="SkillName" [(ngModel)]="institute.SkillName" SkillName="SkillName" required>
+                  <datalist id="skills">
+                    <option value="Angular 2+">
+                    <option value="React">
+                    <option value="Python">
+                    <option value=".net">
+                    <option value="Node.js">
+                  </datalist>
+                  <div class="alert alert-danger" style="width: fit-content;"
+                    *ngIf="InstituteForm.get('SkillName').touched&& !InstituteForm.get('SkillName').value"><strong>
+                      SkillName can't be empty</strong></div>
+                  <div class="alert alert-danger" style="width: fit-content;"
+                    *ngIf=" InstituteForm.get('SkillName').touched&&InstituteForm.get('SkillName').errors"><strong>Enter
+                      Minimum 4 letters</strong></div>
+                </div><br><br>
+
+                <div class="col"> <label for="comment">Description</label>
+                  <textarea class="form-control" id="comment" class="form-control" placeholder="Description"
+                    formControlName="Description" [(ngModel)]="institute.Description"></textarea>
+                  <div class="alert alert-danger" style="width: fit-content;"
+                    *ngIf="InstituteForm.get('Description').touched&& !InstituteForm.get('Description').value"><strong>
+                      Description can't be empty</strong></div>
+                  <div class="alert alert-danger" style="width: fit-content;"
+                    *ngIf=" InstituteForm.get('Description').touched&&InstituteForm.get('Description').errors">
+                    <strong>Enter Valid Description pattern</strong></div>
+                </div><br><br>
+                <div class="col"> <label for="comment">Skill level</label>
+                  <select class="form-control" id="sel1" placeholder="Skilllevel" formControlName="Skilllevel"
+                    class="form-control" [(ngModel)]="institute.Skilllevel" name="Skilllevel">
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                    <option>Expert</option>
+
+
+                  </select>
+
+                  <div class="alert alert-danger" style="width: fit-content;"
+                    *ngIf="InstituteForm.get('Skilllevel').touched&& !InstituteForm.get('Skilllevel').value"><strong>
+                      Skilllevel can't be empty</strong></div>
+                  <div class="alert alert-danger" style="width: fit-content;"
+                    *ngIf=" InstituteForm.get('Skilllevel').touched&&InstituteForm.get('Skilllevel').errors">
+                    <strong>Enter Valid Skilllevel pattern</strong></div>
+                </div>
+                <br><br>
+              </div>
+
+
+            </div>
+            <div class="card-footer bg-transparent border-success"><button type="button" class="btn btn-lg btn-danger"
+                (click)="Add()">Add skills </button></div>
+          </div>
+
+
+        </form>
+      </div>
+
+    </div>
+    <br><br>
+    <div class="row">
+
+      <div class="col"><button type="button" class="btn btn-primary" style="float: right; width: 150px;"
+          [disabled]="InstituteForm.invalid" (click)="submit()"> Save </button></div>
+    </div>
+    <br>
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+
+
+
+  </div>
